@@ -34,7 +34,6 @@
     "phone_number": "+89034782748432",
     "email": "eugen@gmail.com"
   },
-
   {
     "photo": "https://picsum.photos/200",
     "name": "Gim",
@@ -70,7 +69,6 @@
     "phone_number": "",
     "email": "helt@gmail.com"
   },
-
   {
     "photo": "https://picsum.photos/200",
     "name": "Zoro",
@@ -107,3 +105,4 @@
     "email": ""
   }
 ]
+
