@@ -38,35 +38,35 @@
     "photo": "https://picsum.photos/200",
     "name": "Gim",
     "surname": "Gobson",
-    "phone_number": "",
+    "phone_number": null,
     "email": "GG@gmail.com"
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Rebecca",
     "surname": "July",
-    "phone_number": "",
+    "phone_number": null,
     "email": "rebjul@gmail.com"
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Luffy",
     "surname": "Strawhat",
-    "phone_number": "",
+    "phone_number": null,
     "email": "PirateKing@gmail.com"
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Zik",
     "surname": "Egar",
-    "phone_number": "",
+    "phone_number": null,
     "email": "egar@gmail.com"
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "John",
     "surname": "Helt",
-    "phone_number": "",
+    "phone_number": null,
     "email": "helt@gmail.com"
   },
   {
@@ -74,35 +74,35 @@
     "name": "Zoro",
     "surname": "Swordsman",
     "phone_number": "+6786545345",
-    "email": ""
+    "email": null
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Zena",
     "surname": "Gilberts",
     "phone_number": "+23234235645",
-    "email": ""
+    "email": null
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Zara",
     "surname": "Heizenberg",
     "phone_number": "+1232345456667",
-    "email": ""
+    "email": null
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Arnold",
     "surname": "Drager",
     "phone_number": "+754654342345",
-    "email": ""
+    "email": null
   },
   {
     "photo": "https://picsum.photos/200",
     "name": "Billy",
     "surname": "Herington",
     "phone_number": "+45634523664",
-    "email": ""
+    "email": null
   }
 ]
 

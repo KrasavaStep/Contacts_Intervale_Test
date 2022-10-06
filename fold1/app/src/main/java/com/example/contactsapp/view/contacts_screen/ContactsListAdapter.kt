@@ -31,13 +31,15 @@ class ContactsListAdapter : ListAdapter<ContactItem, ContactsListAdapter.ViewHol
             nameSurname.text = contact.name + " " + contact.surname
             email.text = contact.email
             phone.text = contact.phoneNumber
+
             contactImage.setImageBitmap(contact.photo)
-//            val url = URL("fsdf")
-//            val icon = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
         }
     }
 
+    fun setData(contacts: List<ContactItem>) {
+        submitList(contacts.toMutableList())
+    }
 
     companion object {
 
