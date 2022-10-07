@@ -1,10 +1,7 @@
 package com.example.contactsapp
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import com.example.contactsapp.entities.ContactItem
 import com.example.contactsapp.entities.JsonContactResponse
-import java.net.URL
 
 class ContactMapper {
 
@@ -13,9 +10,9 @@ class ContactMapper {
         list.forEach { contact ->
             contactList.add(
                 ContactItem(
-                    photo = fromURLtoBitmap(URL(contact.photo)),
-                    email = contact.email ?: "email missing",
-                    phoneNumber = contact.phoneNumber ?: "phone missing",
+                    photo = contact.photo,
+                    email = contact.email ?: "",
+                    phoneNumber = contact.phoneNumber ?: "",
                     name = contact.name,
                     surname = contact.surname
                 )
@@ -24,7 +21,5 @@ class ContactMapper {
         return contactList
     }
 
-    private fun fromURLtoBitmap(url: URL): Bitmap {
-        return BitmapFactory.decodeStream(url.openConnection().getInputStream())
-    }
+
 }

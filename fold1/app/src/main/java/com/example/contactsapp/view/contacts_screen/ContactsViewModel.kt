@@ -9,7 +9,6 @@ import com.example.contactsapp.data.ContactsRepository
 import com.example.contactsapp.entities.ContactItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ContactsViewModel(private val repository: ContactsRepository) : ViewModel() {
 

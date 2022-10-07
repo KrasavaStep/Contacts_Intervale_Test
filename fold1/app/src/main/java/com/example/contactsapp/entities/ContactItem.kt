@@ -1,9 +1,7 @@
 package com.example.contactsapp.entities
 
-import android.graphics.Bitmap
-
 data class ContactItem (
-    val photo: Bitmap,
+    val photo: String,
     val name: String,
     val surname: String,
     val phoneNumber: String,
