@@ -1,10 +1,10 @@
 package com.example.contactsapp.di
 
-import com.example.contactsapp.data.ContactsRepository
+import com.example.contactsapp.data.ContactsRepositoryBuildInJsonImpl
 import org.koin.dsl.module
 
 val dataModule = module {
-    single<ContactsRepository> {
-        ContactsRepository(get())
+    single<ContactsRepositoryBuildInJsonImpl> {
+        ContactsRepositoryBuildInJsonImpl(get())
     }
 }
