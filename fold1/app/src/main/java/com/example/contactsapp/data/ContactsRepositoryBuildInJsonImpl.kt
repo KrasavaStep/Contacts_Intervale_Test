@@ -2,7 +2,7 @@ package com.example.contactsapp.data
 
 import android.content.Context
 import android.util.Log
-import com.example.contactsapp.entities.JsonContactResponse
+import com.example.contactsapp.entities.ContactResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
@@ -11,7 +11,7 @@ const val CONTACTS_FILE = "contacts.json"
 
 class ContactsRepositoryBuildInJsonImpl(private val context: Context) : ContactsRepository{
 
-    override fun getContactsList() : List<JsonContactResponse>{
+    override fun getContactsList() : List<ContactResponse>{
 
         lateinit var jsonString: String
         try{
@@ -23,7 +23,7 @@ class ContactsRepositoryBuildInJsonImpl(private val context: Context) : Contacts
             Log.e("data_parse", ioException.message.toString())
         }
 
-        val listContactType = object : TypeToken<List<JsonContactResponse>>(){}.type
+        val listContactType = object : TypeToken<List<ContactResponse>>(){}.type
         return Gson().fromJson(jsonString, listContactType)
     }
 

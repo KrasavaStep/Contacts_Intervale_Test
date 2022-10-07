@@ -1,7 +1,7 @@
 package com.example.contactsapp.data
 
-import com.example.contactsapp.entities.JsonContactResponse
+import com.example.contactsapp.entities.ContactResponse
 
 interface ContactsRepository {
-    fun getContactsList() : List<JsonContactResponse>
+    fun getContactsList() : List<ContactResponse>
 }
