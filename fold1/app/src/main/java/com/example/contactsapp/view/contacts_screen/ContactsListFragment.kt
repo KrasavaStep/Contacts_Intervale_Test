@@ -37,4 +37,9 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }
