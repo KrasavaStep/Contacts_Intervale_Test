@@ -1,7 +1,5 @@
 package com.example.contactsapp.di
 
-import com.example.contactsapp.data.ContactsRepository
-import com.example.contactsapp.data.ContactsRepositoryBuildInJsonImpl
 import com.example.contactsapp.data.ContactsRepositoryNetworkRequestImpl
 import com.example.contactsapp.view.contacts_screen.ContactsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
