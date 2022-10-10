@@ -12,15 +12,17 @@ import kotlinx.coroutines.launch
 
 class ContactsViewModel(private val repository: ContactsRepository) : ViewModel() {
 
-    private val _contactsLiveData = MutableLiveData<List<ContactItem>>()
-    val contactsLiveData: LiveData<List<ContactItem>> = _contactsLiveData
+    private val _contactsLiveData = MutableLiveData<List<ContactItem>?>()
+    val contactsLiveData: LiveData<List<ContactItem>?> = _contactsLiveData
 
     fun getContactsList() {
         viewModelScope.launch(Dispatchers.Default) {
-            val contactList =
-                ContactMapper().fromJSONResponseToContactItem(repository.getContactsList())
+            repository.getContactsList()?.let {
+                val contactList =
+                    ContactMapper().fromJSONResponseToContactItem(it)
 
-            _contactsLiveData.postValue(contactList)
+                _contactsLiveData.postValue(contactList)
+            } ?: _contactsLiveData.postValue(null)
         }
     }
 }

@@ -1,11 +1,11 @@
 package com.example.contactsapp
 
 import com.example.contactsapp.entities.ContactItem
-import com.example.contactsapp.entities.JsonContactResponse
+import com.example.contactsapp.entities.ContactResponse
 
 class ContactMapper {
 
-    fun fromJSONResponseToContactItem(list: List<JsonContactResponse>): List<ContactItem> {
+    fun fromJSONResponseToContactItem(list: List<ContactResponse>): List<ContactItem> {
         val contactList = mutableListOf<ContactItem>()
         list.forEach { contact ->
             contactList.add(
@@ -20,6 +20,5 @@ class ContactMapper {
         }
         return contactList
     }
-
 
 }

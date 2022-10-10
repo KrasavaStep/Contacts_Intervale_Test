@@ -32,10 +32,10 @@ class ContactsListAdapter :
         val contact = getItem(position)
         holder.binding.apply {
             nameSurname.text = contact.name + " " + contact.surname
-            if (contact.email.isEmpty()){
+            if (contact.email.isEmpty()) {
                 email.visibility = View.GONE
             }
-            if (contact.phoneNumber.isEmpty()){
+            if (contact.phoneNumber.isEmpty()) {
                 phone.visibility = View.GONE
             }
             email.text = contact.email

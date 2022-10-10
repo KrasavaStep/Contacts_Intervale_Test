@@ -1,30 +1,7 @@
 package com.example.contactsapp.data
 
-import android.content.Context
-import android.util.Log
-import com.example.contactsapp.entities.JsonContactResponse
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.*
+import com.example.contactsapp.entities.ContactResponse
 
-const val CONTACTS_FILE = "contacts.json"
-
-class ContactsRepository(private val context: Context) {
-
-    fun getContactsList() : List<JsonContactResponse>{
-
-        lateinit var jsonString: String
-        try{
-            jsonString = context.assets.open(CONTACTS_FILE)
-                .bufferedReader()
-                .use { it.readText() }
-        }
-        catch (ioException: IOException){
-            Log.e("data_parse", ioException.message.toString())
-        }
-
-        val listContactType = object : TypeToken<List<JsonContactResponse>>(){}.type
-        return Gson().fromJson(jsonString, listContactType)
-    }
-
+interface ContactsRepository {
+    suspend fun getContactsList(): List<ContactResponse>?
 }
