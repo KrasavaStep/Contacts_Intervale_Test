@@ -12,6 +12,6 @@ val dataModule = module {
 //    }
 
     single<ContactsRepository> {
-        ContactsRepositoryNetworkRequestImpl(get<ContactsAPI>())
+        ContactsRepositoryNetworkRequestImpl(get<ContactsAPI>(), get())
     }
 }

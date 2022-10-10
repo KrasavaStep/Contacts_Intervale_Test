@@ -33,7 +33,23 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         viewModel.getContactsList()
 
         viewModel.contactsLiveData.observe(viewLifecycleOwner) {
-            adapter.setData(it)
+            it?.let {
+                binding.contactsRv.visibility = View.VISIBLE
+                binding.errorLayout.visibility = View.GONE
+                adapter.setData(it)
+            } ?: showErrorUi()
+
+        }
+
+        binding.refreshBtn.setOnClickListener {
+            viewModel.getContactsList()
+        }
+    }
+
+    private fun showErrorUi() {
+        binding.apply {
+            contactsRv.visibility = View.GONE
+            errorLayout.visibility = View.VISIBLE
         }
     }
 
