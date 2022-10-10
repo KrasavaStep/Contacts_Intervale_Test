@@ -21,5 +21,4 @@ class ContactMapper {
         return contactList
     }
 
-
 }

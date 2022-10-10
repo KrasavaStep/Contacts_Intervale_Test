@@ -18,10 +18,9 @@ val networkModule = module {
     single<OkHttpClient> {
         val httpClient = OkHttpClient.Builder()
 
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             httpClient.addInterceptor((get<HttpLoggingInterceptor>())).build()
-        }
-        else{
+        } else {
             httpClient.build()
         }
     }
@@ -37,6 +36,5 @@ val networkModule = module {
     single<ContactsAPI> {
         (get<Retrofit>(named("ContactsRetrofit")).create(ContactsAPI::class.java))
     }
-
 
 }

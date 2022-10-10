@@ -9,22 +9,20 @@ import java.io.*
 
 const val CONTACTS_FILE = "contacts.json"
 
-class ContactsRepositoryBuildInJsonImpl(private val context: Context) : ContactsRepository{
+class ContactsRepositoryBuildInJsonImpl(private val context: Context) : ContactsRepository {
 
-    override fun getContactsList() : List<ContactResponse>{
+    override suspend fun getContactsList(): List<ContactResponse> {
 
         lateinit var jsonString: String
-        try{
+        try {
             jsonString = context.assets.open(CONTACTS_FILE)
                 .bufferedReader()
                 .use { it.readText() }
-        }
-        catch (ioException: IOException){
+        } catch (ioException: IOException) {
             Log.e("data_parse", ioException.message.toString())
         }
 
-        val listContactType = object : TypeToken<List<ContactResponse>>(){}.type
+        val listContactType = object : TypeToken<List<ContactResponse>>() {}.type
         return Gson().fromJson(jsonString, listContactType)
     }
-
 }

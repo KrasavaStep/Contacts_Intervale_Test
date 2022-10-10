@@ -32,13 +32,13 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
 
         viewModel.getContactsList()
 
-        viewModel.contactsLiveData.observe(viewLifecycleOwner){
+        viewModel.contactsLiveData.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
