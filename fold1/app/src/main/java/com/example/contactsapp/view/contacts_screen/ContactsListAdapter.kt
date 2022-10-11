@@ -31,7 +31,7 @@ class ContactsListAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = getItem(position)
         holder.binding.apply {
-            nameSurname.text = contact.name + " " + contact.surname
+            nameSurname.text = contact.name + " " + contact.lastname
             if (contact.email.isEmpty()) {
                 email.visibility = View.GONE
             }
@@ -63,7 +63,7 @@ class ContactsListAdapter :
                     newItem: ContactItem
                 ): Boolean {
                     return oldItem.name == newItem.name
-                            && oldItem.surname == newItem.surname
+                            && oldItem.lastname == newItem.lastname
                             && oldItem.phoneNumber == newItem.phoneNumber
                             && oldItem.email == newItem.email
                 }

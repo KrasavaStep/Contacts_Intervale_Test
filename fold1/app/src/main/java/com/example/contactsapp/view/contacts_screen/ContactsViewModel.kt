@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.contactsapp.ContactMapper
 import com.example.contactsapp.data.ContactsRepository
 import com.example.contactsapp.entities.ContactItem
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +17,8 @@ class ContactsViewModel(private val repository: ContactsRepository) : ViewModel(
     fun getContactsList() {
         viewModelScope.launch(Dispatchers.Default) {
             repository.getContactsList()?.let {
-                val contactList =
-                    ContactMapper().fromJSONResponseToContactItem(it)
 
-                _contactsLiveData.postValue(contactList)
+                _contactsLiveData.postValue(it)
             } ?: _contactsLiveData.postValue(null)
         }
     }
