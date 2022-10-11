@@ -1,7 +1,8 @@
-package com.example.contactsapp.data
+package com.example.contactsapp.data.buildin_json
 
 import android.content.Context
 import android.util.Log
+import com.example.contactsapp.data.ContactsRepository
 import com.example.contactsapp.entities.ContactResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

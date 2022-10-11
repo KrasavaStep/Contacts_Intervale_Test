@@ -1,11 +1,10 @@
-package com.example.contactsapp.data
+package com.example.contactsapp.data.network
 
 import android.content.Context
-import com.example.contactsapp.data.contacts_api.ContactsAPI
-import com.example.contactsapp.data.contacts_api.ContactsApiResponse
+import com.example.contactsapp.data.ContactsRepository
+import com.example.contactsapp.data.network.contacts_api.ContactsAPI
 import com.example.contactsapp.entities.ContactResponse
 import com.example.contactsapp.utilities.NetworkManager
-import kotlinx.coroutines.*
 
 class ContactsRepositoryNetworkRequestImpl(
     private val contactsApi: ContactsAPI,

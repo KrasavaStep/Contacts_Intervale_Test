@@ -1,4 +1,4 @@
-package com.example.contactsapp.data.contacts_api
+package com.example.contactsapp.data.network.contacts_api
 
 import retrofit2.http.GET
 
