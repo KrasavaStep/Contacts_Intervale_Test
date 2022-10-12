@@ -245,7 +245,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="@{() -> vm.addContactToDb(vm.contactName, vm.contactLastname, vm.contactEmail, vm.contactPhoto, vm.contactPhone)}"
+            android:onClick="@{() -> vm.addContact(vm.contactName, vm.contactLastname, vm.contactEmail, vm.contactPhoto, vm.contactPhone)}"
             android:text="Add contact"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,7 +7,7 @@ import com.example.contactsapp.data.db.ContactsDAO
 import com.example.contactsapp.data.db.ContactsDatabase
 import org.koin.dsl.module
 
-private const val PREPOPULATE_DB = "prep_contacts_db.db"
+private const val PREPOPULATE_DB = "prp_contacts_db.db"
 
 fun provideDatabase(application: Application): ContactsDatabase {
     return Room.databaseBuilder(application, ContactsDatabase::class.java, "contacts_db")

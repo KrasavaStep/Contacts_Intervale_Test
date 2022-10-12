@@ -44,7 +44,8 @@ class ContactMapper {
             contactLastname = contact.lastname,
             contactPhoto = contact.photo,
             contactEmail = contact.email,
-            contactPhone = contact.phoneNumber
+            contactPhone = contact.phoneNumber,
+            contactId = 0
         )
     }
 

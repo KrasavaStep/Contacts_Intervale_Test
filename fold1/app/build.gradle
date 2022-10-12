@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.contactsapp"
-        minSdk 23
-        targetSdk 31
+        minSdk 16
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 

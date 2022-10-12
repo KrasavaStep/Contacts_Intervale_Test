@@ -109,7 +109,7 @@ class AddContactsViewModel(private val repository: ContactsRepository) : ViewMod
         return isMailValid && isNameValid && isLastnameValid && isPhoneValid && isPhotoValid
     }
 
-    fun addContactToDb(name: String, lastname: String, email: String, photo: String, phone: String) {
+    fun addContact(name: String, lastname: String, email: String, photo: String, phone: String) {
         val newContact = ContactItem(
             name = name,
             lastname = lastname,
