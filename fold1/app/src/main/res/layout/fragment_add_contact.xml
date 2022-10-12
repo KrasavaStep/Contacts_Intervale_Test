@@ -45,9 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="Photo: "
             android:textSize="25sp"
-            android:layout_marginTop="10dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/email"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="Email: "
             android:textSize="25sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/photo" />
@@ -87,7 +87,7 @@
             android:layout_marginEnd="20dp"
             app:errorEnabled="true"
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
-            app:errorText='@{vm.nameTextErrorLD}'
+            app:errorText="@{vm.nameTextErrorLiveData}"
             app:errorTextColor="@color/error_color_red"
             app:layout_constraintBottom_toTopOf="@id/edit_lastname"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,8 +102,7 @@
                 android:hint="Enter Name"
                 android:maxLength="32"
                 android:minEms="2"
-
-                android:text="@={vm.nameTextLD}"
+                android:text="@={vm.contactName}"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +113,7 @@
             android:layout_marginEnd="20dp"
             app:errorEnabled="true"
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
-            app:errorText="@{vm.lastnameTextErrorLD}"
+            app:errorText="@{vm.lastnameTextErrorLiveData}"
             app:errorTextColor="@color/error_color_red"
             app:layout_constraintBottom_toTopOf="@id/edit_photo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +128,7 @@
                 android:hint="Enter Lastname"
                 android:maxLength="32"
                 android:minEms="2"
-                android:text="@={vm.lastnameTextLD}"
+                android:text="@={vm.contactLastname}"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +140,7 @@
             android:layout_marginEnd="20dp"
             app:errorEnabled="true"
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
-            app:errorText="@{vm.photoTextErrorLD}"
+            app:errorText="@{vm.photoTextErrorLiveData}"
             app:errorTextColor="@color/error_color_red"
             app:layout_constraintBottom_toTopOf="@id/edit_email"
             app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +153,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_border"
                 android:hint="Enter Photo URL"
-                android:text="@={vm.photoTextLD}"
+                android:maxLines="1"
+                android:text="@={vm.contactPhoto}"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -166,7 +166,7 @@
             android:layout_marginEnd="20dp"
             app:errorEnabled="true"
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
-            app:errorText="@{vm.emailTextErrorLD}"
+            app:errorText="@{vm.emailTextErrorLiveData}"
             app:errorTextColor="@color/error_color_red"
             app:layout_constraintBottom_toTopOf="@id/edit_phone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -180,8 +180,7 @@
                 android:background="@drawable/edit_text_border"
                 android:hint="Enter Email"
                 android:inputType="textEmailAddress"
-
-                android:text="@={vm.emailTextLD}"
+                android:text="@={vm.contactEmail}"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -193,7 +192,7 @@
             android:layout_marginEnd="20dp"
             app:errorEnabled="true"
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
-            app:errorText="@{vm.phoneTextErrorLD}"
+            app:errorText="@{vm.phoneTextErrorLiveData}"
             app:errorTextColor="@color/error_color_red"
             app:layout_constraintBottom_toTopOf="@id/barrier2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -208,7 +207,7 @@
                 android:hint="Enter Phone"
                 android:inputType="phone"
                 android:maxLength="15"
-                android:text="@={vm.phoneTextLD}"
+                android:text="@={vm.contactPhone}"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -246,8 +245,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="@{() -> vm.addContactToDb(vm.contactName, vm.contactLastname, vm.contactEmail, vm.contactPhoto, vm.contactPhone)}"
             android:text="Add contact"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/barrier2" />

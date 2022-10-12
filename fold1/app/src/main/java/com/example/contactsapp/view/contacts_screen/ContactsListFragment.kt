@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactsapp.R
 import com.example.contactsapp.databinding.FragmentContactsListBinding
@@ -47,7 +48,7 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         }
 
         binding.toAddContactScreenBtn.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_contactsListFragment_to_addContactFragment)
+            view.findNavController().navigate(R.id.action_contactsListFragment_to_addContactFragment)
         }
     }
 

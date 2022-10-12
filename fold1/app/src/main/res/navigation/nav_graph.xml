@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/contactsListFragment">
-
     <fragment
         android:id="@+id/contactsListFragment"
         android:name="com.example.contactsapp.view.contacts_screen.ContactsListFragment"
@@ -12,22 +11,15 @@
         <action
             android:id="@+id/action_contactsListFragment_to_addContactFragment"
             app:destination="@id/addContactFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            app:popUpTo="@id/contactsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addContactFragment"
         android:name="com.example.contactsapp.view.add_contact_screen.AddContactFragment"
-        android:label="fragment_add_contact"
-        tools:layout="@layout/fragment_add_contact" >
+        android:label="AddContactFragment" >
         <action
-            android:id="@+id/action_addContactFragment_to_contactsListFragment"
+            android:id="@+id/action_addContactFragment_to_contactsListFragment2"
             app:destination="@id/contactsListFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            app:popUpTo="@id/contactsListFragment" />
     </fragment>
 </navigation>

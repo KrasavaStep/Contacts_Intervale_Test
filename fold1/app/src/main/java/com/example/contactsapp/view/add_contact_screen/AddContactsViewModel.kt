@@ -2,103 +2,100 @@ package com.example.contactsapp.view.add_contact_screen
 
 import android.util.Log
 import android.util.Patterns
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.contactsapp.data.ContactsRepository
 import com.example.contactsapp.entities.ContactItem
+import com.example.contactsapp.utilities.NotYetImplementedException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 class AddContactsViewModel(private val repository: ContactsRepository) : ViewModel() {
 
-    val nameTextLD = MutableLiveData("")
-    private val _nameTextErrorLD = MutableLiveData<String>()
-    val nameTextErrorLD: LiveData<String> = _nameTextErrorLD
+    private val _nameTextErrorLiveData = MutableLiveData<String>()
+    val nameTextErrorLiveData: LiveData<String> = _nameTextErrorLiveData
 
-    val lastnameTextLD = MutableLiveData("")
-    private val _lastnameTextErrorLD = MutableLiveData<String>()
-    val lastnameTextErrorLD: LiveData<String> = _lastnameTextErrorLD
+    private val _lastnameTextErrorLiveData = MutableLiveData<String>()
+    val lastnameTextErrorLiveData: LiveData<String> = _lastnameTextErrorLiveData
 
-    val photoTextLD = MutableLiveData("")
-    private val _photoTextErrorLD = MutableLiveData<String>()
-    val photoTextErrorLD: LiveData<String> = _photoTextErrorLD
+    private val _photoTextErrorLiveData = MutableLiveData<String>()
+    val photoTextErrorLiveData: LiveData<String> = _photoTextErrorLiveData
 
-    val emailTextLD = MutableLiveData("")
-    private val _emailTextErrorLD = MutableLiveData<String>()
-    val emailTextErrorLD: LiveData<String> = _emailTextErrorLD
+    private val _emailTextErrorLiveData = MutableLiveData<String>()
+    val emailTextErrorLiveData: LiveData<String> = _emailTextErrorLiveData
 
-    val phoneTextLD = MutableLiveData("")
-    private val _phoneTextErrorLD = MutableLiveData<String>()
-    val phoneTextErrorLD: LiveData<String> = _phoneTextErrorLD
+    private val _phoneTextErrorLiveData = MutableLiveData<String>()
+    val phoneTextErrorLiveData: LiveData<String> = _phoneTextErrorLiveData
 
-    private val _isDataSet = MutableLiveData(false)
+    private val _isDataSet = MutableLiveData<Boolean>()
     val isDataSet: LiveData<Boolean> = _isDataSet
+
+    val contactName = MutableLiveData<String>()
+    val contactLastname = MutableLiveData<String>()
+    val contactEmail = MutableLiveData<String>()
+    val contactPhone = MutableLiveData<String>()
+    val contactPhoto = MutableLiveData<String>()
 
     private fun validateNameInput(name: String): Boolean {
         return if (name.isEmpty()) {
-            _nameTextErrorLD.postValue("Fill out field!")
+            _nameTextErrorLiveData.postValue("Fill out field!")
             false
         } else if (name.length !in 2..32) {
-            _nameTextErrorLD.postValue("Name must be contain from 2 to 32 characters")
+            _nameTextErrorLiveData.postValue("Name must be contain from 2 to 32 characters")
             false
         } else {
-            _nameTextErrorLD.postValue("")
+            _nameTextErrorLiveData.postValue("")
             true
         }
     }
 
     private fun validateLastnameInput(lastname: String): Boolean {
         return if (lastname.isEmpty()) {
-            _lastnameTextErrorLD.postValue("Fill out field!")
+            _lastnameTextErrorLiveData.postValue("Fill out field!")
             false
         } else if (lastname.length !in 2..32) {
-            _lastnameTextErrorLD.postValue("Lastname must be contain from 2 to 32 characters")
+            _lastnameTextErrorLiveData.postValue("Lastname must be contain from 2 to 32 characters")
             false
         } else {
-            _lastnameTextErrorLD.postValue("")
+            _lastnameTextErrorLiveData.postValue("")
             true
         }
     }
 
     private fun validatePhotoInput(photo: String): Boolean {
         return if (photo.isEmpty()) {
-            _photoTextErrorLD.postValue("Fill out field!")
+            _photoTextErrorLiveData.postValue("Fill out field!")
             false
         } else {
-            _photoTextErrorLD.postValue("")
+            _photoTextErrorLiveData.postValue("")
             true
         }
     }
 
     private fun validateEmailInput(email: String): Boolean {
         return if (email.isEmpty()) {
-            _emailTextErrorLD.postValue("Fill out field!")
+            _emailTextErrorLiveData.postValue("Fill out field!")
             false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailTextErrorLD.postValue("Incorrect Email format")
+            _emailTextErrorLiveData.postValue("Incorrect Email format")
             false
         } else {
-            _emailTextErrorLD.postValue("")
+            _emailTextErrorLiveData.postValue("")
             true
         }
     }
 
     private fun validatePhoneInput(phone: String): Boolean {
         return if (phone.isEmpty()) {
-            _phoneTextErrorLD.value = "Fill out field!"
-            Log.d("err_b", "empty")
+            _phoneTextErrorLiveData.value = "Fill out field!"
             false
         } else if (!Patterns.PHONE.matcher(phone).matches() && phone.length < 9) {
-            Log.d("err_b", "not match")
-            _phoneTextErrorLD.value = "Incorrect phone number"
+            _phoneTextErrorLiveData.value = "Incorrect phone number"
             false
         } else {
-            Log.d("err_b", "all right")
-            _phoneTextErrorLD.value = ""
+            _phoneTextErrorLiveData.value = ""
             true
         }
     }
@@ -112,13 +109,27 @@ class AddContactsViewModel(private val repository: ContactsRepository) : ViewMod
         return isMailValid && isNameValid && isLastnameValid && isPhoneValid && isPhotoValid
     }
 
-    fun addContactToDb(contact: ContactItem) {
-        val isValid = validateAllFields(contact)
-        Log.d("err_b", isValid.toString())
-        if (isValid) {
+    fun addContactToDb(name: String, lastname: String, email: String, photo: String, phone: String) {
+        val newContact = ContactItem(
+            name = name,
+            lastname = lastname,
+            email = email,
+            photo = photo,
+            phoneNumber = phone
+        )
+
+        if (validateAllFields(newContact)) {
             viewModelScope.launch(Dispatchers.IO) {
-                repository.addContact(contact)
-                _isDataSet.postValue(true)
+                try {
+                    repository.addContact(newContact)
+                    _isDataSet.postValue(true)
+                } catch (e: NotYetImplementedException) {
+                    Log.d("AppException", "${e.message}")
+                    _isDataSet.postValue(false)
+                } catch (e: Exception) {
+                    Log.d("AppException", "${e.message}")
+                    _isDataSet.postValue(false)
+                }
             }
         }
     }
