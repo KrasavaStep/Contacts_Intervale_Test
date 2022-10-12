@@ -2,9 +2,13 @@ package com.example.contactsapp.view.add_contact_screen
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.example.contactsapp.R
 import com.example.contactsapp.databinding.FragmentAddContactBinding
@@ -21,46 +25,27 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
 
     private val viewModel by viewModel<AddContactsViewModel>(named("AddContactsVM"))
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        _binding = FragmentAddContactBinding.bind(view)
         binding.apply {
-
-            val viewMap = mutableMapOf<String, View>()
-            viewMap["name"] = editName
-            viewMap["lastname"] = editLastname
-            viewMap["phone"] = editPhone
-            viewMap["email"] = editEmail
-            viewMap["photo"] = editPhoto
-
             addContactBtn.setOnClickListener {
-                for ((k, v) in viewMap) {
-                    v.background = ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.edit_text_border,
-                        null
-                    )
-                }
-                viewModel.addContactToDb(createContact(), viewMap)
+                viewModel.addContactToDb(createContact())
             }
 
-            viewModel.errorViewLiveData.observe(viewLifecycleOwner) { list ->
-                list.forEach { view ->
-                    view.background = ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.edit_text_err_border,
-                        null
-                    )
-                }
-            }
 
-            viewModel.errorTextLiveData.observe(viewLifecycleOwner) {
-                errorText.text = it
-            }
-
-            viewModel.isDataSetLiveData.observe(viewLifecycleOwner) {
+            viewModel.isDataSet.observe(viewLifecycleOwner) {
                 if (it)
                     Navigation.findNavController(view)
                         .navigate(R.id.action_addContactFragment_to_contactsListFragment)
@@ -71,11 +56,11 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
     private fun createContact(): ContactItem {
         binding.apply {
             return ContactItem(
-                name = editName.text.toString(),
-                lastname = editLastname.text.toString(),
-                phoneNumber = editPhone.text.toString(),
-                email = editEmail.text.toString(),
-                photo = editPhoto.text.toString()
+                name = editNameText.text.toString(),
+                lastname = editLastnameText.text.toString(),
+                phoneNumber = editPhoneText.text.toString(),
+                email = editEmailText.text.toString(),
+                photo = editPhotoText.text.toString()
             )
         }
     }

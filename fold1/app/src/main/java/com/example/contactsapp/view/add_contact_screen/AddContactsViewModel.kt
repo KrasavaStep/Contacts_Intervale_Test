@@ -15,109 +15,112 @@ import java.util.regex.Pattern
 
 class AddContactsViewModel(private val repository: ContactsRepository) : ViewModel() {
 
-    private var _errorViewLiveData = MutableLiveData<List<View>>()
-    val errorViewLiveData: LiveData<List<View>> = _errorViewLiveData
+    val nameTextLD = MutableLiveData("")
+    private val _nameTextErrorLD = MutableLiveData<String>()
+    val nameTextErrorLD: LiveData<String> = _nameTextErrorLD
 
-    private var _errorTextLiveData = MutableLiveData<String>()
-    val errorTextLiveData: LiveData<String> = _errorTextLiveData
+    val lastnameTextLD = MutableLiveData("")
+    private val _lastnameTextErrorLD = MutableLiveData<String>()
+    val lastnameTextErrorLD: LiveData<String> = _lastnameTextErrorLD
 
-    private var _isDataSetLiveData = MutableLiveData<Boolean>()
-    val isDataSetLiveData: LiveData<Boolean> = _isDataSetLiveData
+    val photoTextLD = MutableLiveData("")
+    private val _photoTextErrorLD = MutableLiveData<String>()
+    val photoTextErrorLD: LiveData<String> = _photoTextErrorLD
 
-    enum class InputErrors {
-        EMPTY_FIELDS {
-            override fun getErrorPlaces(
-                contact: ContactItem,
-                viewMap: Map<String, View>
-            ): List<View> {
-                val viewList = mutableListOf<View>()
-                if (contact.name.isEmpty()) {
-                    viewList.add(viewMap["name"]!!)
-                }
-                if (contact.lastname.isEmpty()) {
-                    viewList.add(viewMap["lastname"]!!)
-                }
-                if (contact.photo.isEmpty()) {
-                    viewList.add(viewMap["photo"]!!)
-                }
-                if (contact.email.isEmpty() && contact.phoneNumber.isEmpty()) {
-                    viewList.add(viewMap["email"]!!)
-                    viewList.add(viewMap["phone"]!!)
-                }
-                return viewList
-            }
-        },
-        INCORRECT_EMAIL_PHONE {
-            override fun getErrorPlaces(
-                contact: ContactItem,
-                viewMap: Map<String, View>
-            ): List<View> {
-                val viewList = mutableListOf<View>()
-                if (contact.phoneNumber.isNotEmpty() && !Patterns.PHONE.matcher(contact.phoneNumber)
-                        .matches()
-                ) {
-                    viewList.add(viewMap["phone"]!!)
-                }
-                if (contact.email.isNotEmpty() && !Patterns.EMAIL_ADDRESS.matcher(contact.email)
-                        .matches()
-                ) {
-                    viewList.add(viewMap["email"]!!)
-                }
-                return viewList
-            }
-        },
-        INCORRECT_NAME_LENGTH {
-            override fun getErrorPlaces(
-                contact: ContactItem,
-                viewMap: Map<String, View>
-            ): List<View> {
-                val viewList = mutableListOf<View>()
-                if (contact.name.isNotEmpty() && contact.name.length !in 2..32) {
-                    viewList.add(viewMap["name"]!!)
-                }
-                if (contact.lastname.isNotEmpty() && contact.lastname.length !in 2..32) {
-                    viewList.add(viewMap["lastname"]!!)
-                }
-                return viewList
-            }
-        };
+    val emailTextLD = MutableLiveData("")
+    private val _emailTextErrorLD = MutableLiveData<String>()
+    val emailTextErrorLD: LiveData<String> = _emailTextErrorLD
 
-        abstract fun getErrorPlaces(contact: ContactItem, viewMap: Map<String, View>): List<View>
+    val phoneTextLD = MutableLiveData("")
+    private val _phoneTextErrorLD = MutableLiveData<String>()
+    val phoneTextErrorLD: LiveData<String> = _phoneTextErrorLD
 
-    }
+    private val _isDataSet = MutableLiveData(false)
+    val isDataSet: LiveData<Boolean> = _isDataSet
 
-    fun addContactToDb(contact: ContactItem, viewMap: Map<String, View>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val emptyFieldsList = InputErrors.EMPTY_FIELDS.getErrorPlaces(contact, viewMap)
-            val incorrectMailPhone =
-                InputErrors.INCORRECT_EMAIL_PHONE.getErrorPlaces(contact, viewMap)
-            val incorrectName = InputErrors.INCORRECT_NAME_LENGTH.getErrorPlaces(contact, viewMap)
-
-            if (emptyFieldsList.isNotEmpty() || incorrectMailPhone.isNotEmpty() || incorrectName.isNotEmpty()) {
-                val errorViewList = concatenate(emptyFieldsList, incorrectMailPhone, incorrectName)
-                val errorList = mutableListOf<String>()
-                if (emptyFieldsList.isNotEmpty()) {
-                    errorList.add("Please, fill out all fields!")
-                }
-                if (incorrectName.isNotEmpty()) {
-                    errorList.add("Name and surname must contain from 2 to 32 characters")
-                }
-                if (incorrectMailPhone.isNotEmpty()) {
-                    errorList.add("Incorrect mail or phone format")
-                }
-                _errorTextLiveData.postValue(errorList.joinToString("\n"))
-                _errorViewLiveData.postValue(errorViewList)
-                _isDataSetLiveData.postValue(false)
-            } else {
-                _isDataSetLiveData.postValue(true)
-                repository.addContact(contact)
-            }
+    private fun validateNameInput(name: String): Boolean {
+        return if (name.isEmpty()) {
+            _nameTextErrorLD.postValue("Fill out field!")
+            false
+        } else if (name.length !in 2..32) {
+            _nameTextErrorLD.postValue("Name must be contain from 2 to 32 characters")
+            false
+        } else {
+            _nameTextErrorLD.postValue("")
+            true
         }
     }
 
-    private fun <T> concatenate(vararg list: List<T>): List<T> {
-        return listOf(*list).flatten()
+    private fun validateLastnameInput(lastname: String): Boolean {
+        return if (lastname.isEmpty()) {
+            _lastnameTextErrorLD.postValue("Fill out field!")
+            false
+        } else if (lastname.length !in 2..32) {
+            _lastnameTextErrorLD.postValue("Lastname must be contain from 2 to 32 characters")
+            false
+        } else {
+            _lastnameTextErrorLD.postValue("")
+            true
+        }
     }
 
+    private fun validatePhotoInput(photo: String): Boolean {
+        return if (photo.isEmpty()) {
+            _photoTextErrorLD.postValue("Fill out field!")
+            false
+        } else {
+            _photoTextErrorLD.postValue("")
+            true
+        }
+    }
+
+    private fun validateEmailInput(email: String): Boolean {
+        return if (email.isEmpty()) {
+            _emailTextErrorLD.postValue("Fill out field!")
+            false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            _emailTextErrorLD.postValue("Incorrect Email format")
+            false
+        } else {
+            _emailTextErrorLD.postValue("")
+            true
+        }
+    }
+
+    private fun validatePhoneInput(phone: String): Boolean {
+        return if (phone.isEmpty()) {
+            _phoneTextErrorLD.value = "Fill out field!"
+            Log.d("err_b", "empty")
+            false
+        } else if (!Patterns.PHONE.matcher(phone).matches() && phone.length < 9) {
+            Log.d("err_b", "not match")
+            _phoneTextErrorLD.value = "Incorrect phone number"
+            false
+        } else {
+            Log.d("err_b", "all right")
+            _phoneTextErrorLD.value = ""
+            true
+        }
+    }
+
+    private fun validateAllFields(contact: ContactItem): Boolean {
+        val isMailValid = validateEmailInput(contact.email)
+        val isNameValid = validateNameInput(contact.name)
+        val isLastnameValid = validateLastnameInput(contact.lastname)
+        val isPhoneValid = validatePhoneInput(contact.phoneNumber)
+        val isPhotoValid = validatePhotoInput(contact.photo)
+        return isMailValid && isNameValid && isLastnameValid && isPhoneValid && isPhotoValid
+    }
+
+    fun addContactToDb(contact: ContactItem) {
+        val isValid = validateAllFields(contact)
+        Log.d("err_b", isValid.toString())
+        if (isValid) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.addContact(contact)
+                _isDataSet.postValue(true)
+            }
+        }
+    }
 
 }
