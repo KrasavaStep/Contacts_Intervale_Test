@@ -101,15 +101,35 @@ class AddContactsViewModel(private val repository: ContactsRepository) : ViewMod
     }
 
     private fun validateAllFields(contact: ContactItem): Boolean {
-        val isMailValid = validateEmailInput(contact.email)
+
         val isNameValid = validateNameInput(contact.name)
         val isLastnameValid = validateLastnameInput(contact.lastname)
-        val isPhoneValid = validatePhoneInput(contact.phoneNumber)
         val isPhotoValid = validatePhotoInput(contact.photo)
-        return isMailValid && isNameValid && isLastnameValid && isPhoneValid && isPhotoValid
+        validateEmailInput(contact.email)
+        validatePhoneInput(contact.phoneNumber)
+
+        var isMailAndPhoneValid = false
+
+        if (contact.email.isNotEmpty()) {
+            isMailAndPhoneValid = validateEmailInput(contact.email)
+            _phoneTextErrorLiveData.postValue("")
+        } else if (contact.phoneNumber.isNotEmpty()) {
+            isMailAndPhoneValid = validatePhoneInput(contact.phoneNumber)
+            _emailTextErrorLiveData.postValue("")
+        } else if (contact.email.isNotEmpty() && contact.phoneNumber.isNotEmpty()) {
+            isMailAndPhoneValid =
+                validatePhoneInput(contact.phoneNumber) && validateEmailInput(contact.email)
+        }
+        return isMailAndPhoneValid && isNameValid && isLastnameValid && isPhotoValid
     }
 
-    fun addContact(name: String?, lastname: String?, email: String?, photo: String?, phone: String?) {
+    fun addContact(
+        name: String?,
+        lastname: String?,
+        email: String?,
+        photo: String?,
+        phone: String?
+    ) {
         val newContact = ContactItem(
             name = name ?: "",
             lastname = lastname ?: "",
