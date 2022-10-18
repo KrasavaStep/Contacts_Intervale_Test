@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.contactsapp"
-        minSdk 16
+        minSdk 22
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,7 @@ android {
     dataBinding {
         enabled = true
     }
+    namespace 'com.example.contactsapp'
 }
 
 dependencies {
