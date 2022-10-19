@@ -3,13 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 android {
     compileSdk 32
 
     defaultConfig {
         applicationId "com.example.contactsapp"
-        minSdk 23
-        targetSdk 31
+        minSdk 22
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -32,6 +35,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dataBinding {
+        enabled = true
+    }
+    namespace 'com.example.contactsapp'
 }
 
 dependencies {
@@ -75,4 +82,13 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
+    //room
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-ktx:2.4.3"
+    androidTestImplementation "androidx.room:room-testing:2.4.3"
+
+    //navigation graph
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
 }

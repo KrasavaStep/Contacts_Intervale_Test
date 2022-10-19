@@ -1,7 +1,7 @@
 package com.example.contactsapp.di
 
 import com.example.contactsapp.BuildConfig
-import com.example.contactsapp.data.contacts_api.ContactsAPI
+import com.example.contactsapp.data.network.contacts_api.ContactsAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
